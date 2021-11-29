@@ -39,4 +39,18 @@ class ProjectModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    // custom function 
+    public function search(?string $keyword): object
+    {
+        $builder = $this->table("projects");
+        $builder->select("id, name, description, dateline");
+        if ($keyword) {
+            $builder->like("name", $keyword);
+            $builder->orLike("description", $keyword);
+            $builder->orLike("dateline", $keyword);
+        }
+        $builder->orderBy("dateline", "ASC");
+        return $builder;
+    }
 }
