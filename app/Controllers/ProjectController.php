@@ -19,6 +19,16 @@ class ProjectController extends BaseController
 
     public function index()
     {
+        $keyword = esc($this->request->getVar("q"));
+        $projects = $this->projectModel->search($keyword);
+
+        $data = [
+            "title"         => lang("Project.title.index"),
+            "keyword"       => $keyword,
+            "projects"      => $projects->paginate(10, "projects"),
+            "pager"         => $this->projectModel->pager->links("projects")
+        ];
         
+        return view("project/index", $data);
     }
 }
