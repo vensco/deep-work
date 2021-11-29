@@ -23,6 +23,13 @@ $routes->setTranslateURIDashes(false);
 $routes->set404Override();
 $routes->setAutoRoute(true);
 
+// Projects 
+$routes->group("projects", function($routes) {
+
+    $routes->get("/", "ProjectController::index");
+
+});
+
 /*
  * --------------------------------------------------------------------
  * Route Definitions
