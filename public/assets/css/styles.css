@@ -54,10 +54,6 @@ a:hover {
     border: none;
 }
 
-.card {
-    border: none;
-}
-
 .card-body-table {
     flex: 1 1 auto;
 }
