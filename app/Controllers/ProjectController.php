@@ -92,4 +92,11 @@ class ProjectController extends BaseController
             return redirect()->to("/projects")->with("error_update", $e->getMessage());
         }
     }
+
+    public function delete(int $id)
+    {
+        if ($this->projectModel->delete($id)) {
+            return redirect()->to("/projects")->with("success_message", "project deleted");
+        }
+    }
 }
