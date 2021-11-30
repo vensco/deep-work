@@ -37,10 +37,14 @@ class ProjectController extends BaseController
     {
         $inputs = esc($this->request->getPost());
 
+        if (!$this->validate("createProject")) {
+            return redirect()->to("/projects")->with("error_validation", true)->withInput();
+        }
+
         $project = $this->projectEntity;
         $project->name = $inputs["name"];
         $project->description = $inputs["description"];
-        $project->dateline = $inputs["dateline"];
+        $project->dateline = $inputs["dateline"];   
 
         try {
             $this->projectModel->insert($project);
