@@ -14,7 +14,7 @@ class ProjectModel extends Model
     protected $returnType       = \App\Entities\ProjectEntity::class;
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["name", "description", "due_date"];
+    protected $allowedFields    = ["name", "description", "dateline"];
 
     // Dates
     protected $useTimestamps = false;
