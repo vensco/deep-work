@@ -27,6 +27,7 @@ $routes->setAutoRoute(true);
 $routes->group("projects", function($routes) {
 
     $routes->get("/", "ProjectController::index");
+    $routes->post("/", "ProjectController::create");
 
 });
 
