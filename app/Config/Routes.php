@@ -29,6 +29,7 @@ $routes->group("projects", function($routes) {
     $routes->get("/", "ProjectController::index");
     $routes->post("/", "ProjectController::create");
     $routes->get("(:num)", "ProjectController::edit/$1");
+    $routes->put("(:num)", "ProjectController::update/$1");
 
 });
 
