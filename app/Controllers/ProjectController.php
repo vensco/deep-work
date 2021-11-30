@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Entities\ProjectEntity;
 use App\Models\ProjectModel;
+use CodeIgniter\I18n\Time;
 use Exception;
 
 class ProjectController extends BaseController
@@ -20,6 +21,7 @@ class ProjectController extends BaseController
 
     public function index()
     {
+        
         $keyword = esc($this->request->getVar("q"));
         $projects = $this->projectModel->search($keyword);
 
@@ -64,5 +66,30 @@ class ProjectController extends BaseController
         }
 
         return json_encode($project);
+    }
+
+    public function update(int $id)
+    {
+        $inputs = esc($this->request->getPost());
+
+        if (! $this->validate("updateProject")) {
+            return redirect()->to("/projects")->with("error_validation", true)->withInput();
+        }
+
+        $project = $this->projectModel->find($id);
+
+        if (empty($project)) {
+            throw new Exception("project not found", 404);
+        }
+
+        $project->name = $inputs["name"];
+        $project->description = $inputs["description"];
+        $project->dateline = $inputs["dateline"];
+
+        try {
+            $this->projectModel->save($project);
+        } catch(Exception $e) {
+            return redirect()->to("/projects")->with("error_update", $e->getMessage());
+        }
     }
 }
