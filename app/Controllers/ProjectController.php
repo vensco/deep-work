@@ -50,4 +50,15 @@ class ProjectController extends BaseController
 
         return redirect()->to("/projects")->with("success_message", lang("Message.success.create", ["project"]));
     }
+
+    public function edit(int $id)
+    {
+        $project = $this->projectModel->find($id);
+        
+        if (empty($project)) {
+            throw new Exception("project not found", 404);
+        }
+
+        return json_encode($project);
+    }
 }
