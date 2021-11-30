@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Entities\ProjectEntity;
 use App\Models\ProjectModel;
+use Exception;
 
 class ProjectController extends BaseController
 {
@@ -30,5 +31,23 @@ class ProjectController extends BaseController
         ];
         
         return view("project/index", $data);
+    }
+    
+    public function create()
+    {
+        $inputs = esc($this->request->getPost());
+
+        $project = $this->projectEntity;
+        $project->name = $inputs["name"];
+        $project->description = $inputs["description"];
+        $project->dateline = $inputs["dateline"];
+
+        try {
+            $this->projectModel->insert($project);
+        } catch(Exception $e) {
+            return redirect()->to("/projects")->with("error_message", $e->getMessage());
+        }
+
+        return redirect()->to("/projects")->with("success_message", lang("Message.success.create", ["project"]));
     }
 }
